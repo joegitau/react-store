@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Homepage from './components/Homepage';
-import Products from './components/Products';
+import ProductDetail from './components/ProductDetail';
 
 function App() {
   return (
@@ -12,9 +12,8 @@ function App() {
       <Header />
       <main>
         <Container>
-          <h1 className="my-2">Latest products</h1>
           <Route path="/" component={Homepage} exact></Route>
-          <Route path="/products/:id" component={Products}></Route>
+          <Route path="/products/:id" component={ProductDetail}></Route>
         </Container>
       </main>
       <Footer />
