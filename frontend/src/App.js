@@ -10,7 +10,7 @@ function App() {
       <Header />
       <main>
         <Container>
-          <h1>Latest products</h1>
+          <h1 className="my-2">Latest products</h1>
           <Homepage />
         </Container>
       </main>
