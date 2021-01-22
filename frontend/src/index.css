@@ -14,11 +14,7 @@ main {
   margin: 0.1rem;
 }
 
-.border-primary {
-  border-color: #e2e8f0;
-}
-
-.navbar.bg-light {
+.border-primary, .list-group, .list-group-item, .navbar.bg-light {
   border-color: #e2e8f0;
 }
 
