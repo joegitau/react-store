@@ -14,8 +14,7 @@ const ProductDetail = ({ match }) => {
     };
 
     getProduct();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [match]);
 
   return (
     <>
