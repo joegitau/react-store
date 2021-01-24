@@ -9,11 +9,14 @@
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "insert:data": "node backend/seeder.js",
+    "destroy:data": "node backend/seeder.js -d",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joe Gitau",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.11.13"
