@@ -11,7 +11,7 @@ connectDB();
 
 const insertData = async () => {
   try {
-    // empty all collections
+    // empty all collections, if there exists
     await Order.deleteMany();
     await User.deleteMany();
     await Product.deleteMany();
