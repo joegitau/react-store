@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from '../actionTypes/productTypes';
 
-const productList = () => async (dispatch) => {
+export const listOfProducts = () => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.PRODUCT_LIST_REQUEST });
 
@@ -18,5 +18,3 @@ const productList = () => async (dispatch) => {
     });
   }
 };
-
-export default productList;
