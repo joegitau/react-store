@@ -3,6 +3,7 @@ import { Row, Col } from 'react-bootstrap';
 import { useEffect } from 'react';
 
 import { listOfProducts } from '../actions/productAction';
+import Notification from './Notification';
 import Product from './Product';
 
 const Homepage = () => {
@@ -24,7 +25,7 @@ const Homepage = () => {
       {loading ? (
         <h3>loading prodcuts...</h3>
       ) : error ? (
-        <h3>{error}</h3>
+        <Notification variant="danger">{error}</Notification>
       ) : (
         <Row>
           {products.map((product) => (
