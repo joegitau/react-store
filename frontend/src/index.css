@@ -14,12 +14,12 @@ main {
   margin: 0.1rem;
 }
 
-.border-primary, .list-group, .list-group-item, .navbar.bg-light {
+.border-primary, .list-group, .list-group-item, .navbar.bg-light, .form-control {
   border-color: #e2e8f0;
 }
 
-.card-img {
-  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
+.card-img, select.form-control {
+  border-radius: 5px 5px 5px 5px/25px 25px 25px 5px !important;
 }
 
 .breadcrumb {
