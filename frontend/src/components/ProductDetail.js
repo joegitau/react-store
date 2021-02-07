@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { listOfProductDetails } from '../actions/productAction';
+import { listOfProductDetails } from '../actions/productActions';
 import Notification from './Notification';
 import Rating from './Rating';
 
@@ -91,9 +91,9 @@ const ProductDetail = ({ history, match }) => {
                       value={qty}
                       onChange={(e) => setQty(e.target.value)}
                     >
-                      {[...Array(product.countInStock).keys()].map((p) => (
-                        <option key={p + 1} value={p + 1}>
-                          {p + 1}
+                      {[...Array(product.countInStock).keys()].map(c => (
+                        <option key={c + 1} value={c + 1}>
+                          {c + 1}
                         </option>
                       ))}
                     </Form.Control>
@@ -119,3 +119,12 @@ const ProductDetail = ({ history, match }) => {
 };
 
 export default ProductDetail;
+
+// Representing a given count in term of keys
+/* 
+  const countInStock = 10;
+  const countInStockArray = [...Array(countInStock).keys()]
+  console.log(countInStockArray) // [0,1,2,3,4,5,6,7,8,9]
+
+  countInStockArray.map(c => (c + 1)) // [1,2,3,4,5,6,7,8,9,10]
+*/
