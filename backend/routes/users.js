@@ -1,8 +1,30 @@
+import bcryptjs from 'bcryptjs';
 import express from "express";
+
 import User from "../models/User.js";
 
 const router = express.Router();
 
+// user login
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user && (await user.matchPassword(password))) {
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: null
+    });
+  } else {
+    res.status(401).send('Invalid email or password!');
+  }
+});
+
+// get users
 router.get("/", async (req, res) => {
   try {
     const users = await User.find({});
@@ -15,6 +37,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get user
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
@@ -41,6 +64,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// update user
 router.put("/:id", async (req, res) => {
   try {
     const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
@@ -53,6 +77,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// delete user
 router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findOneAndDelete({ _id: req.params.id });
