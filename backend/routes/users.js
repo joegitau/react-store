@@ -1,6 +1,7 @@
 import bcryptjs from 'bcryptjs';
 import express from "express";
 
+import { generateToken } from '../utils/generateToken.js';
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -17,7 +18,7 @@ router.post('/login', async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null
+      token: generateToken(user._id)
     });
   } else {
     res.status(401).send('Invalid email or password!');
@@ -50,6 +51,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// create user
 router.post("/", async (req, res) => {
   try {
     const user = new User(req.body);
