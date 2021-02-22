@@ -1,8 +1,8 @@
-import express from "express";
+import express from 'express';
 
 import { generateToken } from '../utils/generateToken.js';
 import { authorize } from '../middleware/authorization.js';
-import User from "../models/User.js";
+import User from '../models/User.js';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.post('/login', async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: generateToken(user._id)
+      token: generateToken(user._id),
     });
   } else {
     res.status(401).send('Invalid email or password!');
@@ -40,74 +40,89 @@ router.get('/profile', authorize, async (req, res) => {
   } catch (error) {
     res.status(401).json({
       err: error.message,
-      msg: "Couldn\'t login to profile!"
+      msg: "Couldn't login to profile!",
     });
   }
 });
 
 // get users
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const users = await User.find({});
     res.status(200).json(users);
   } catch (error) {
     res.status(400).json({
       err: error.message,
-      msg: "Users not found."
+      msg: 'Users not found.',
     });
   }
 });
 
 // get user
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({
       err: error.message,
-      msg: "Users with given ID not found."
+      msg: 'Users with given ID not found.',
     });
   }
 });
 
 // create user
-router.post("/", async (req, res) => {
-  try {
-    const user = new User(req.body);
-    await user.save();
+router.post('/', async (req, res) => {
+  const { name, email, password } = req.body;
+  // assert existense of user
+  const userExists = await User.findOne({ email });
 
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(400).json({
-      err: error.message,
-      msg: "User not created."
-    });
+  if (!userExists) {
+    try {
+      const user = new User({ name, email, password });
+      await user.save();
+
+      res.status(201).json({
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      });
+    } catch (error) {
+      res.status(400).json({
+        err: error.message,
+        msg: 'User not created.',
+      });
+    }
   }
+
+  res.status(400).send('User already exists!');
 });
 
 // update user
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true });
+    const user = await User.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      new: true,
+    });
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({
       err: error.message,
-      msg: "Users with given ID not updated."
+      msg: 'Users with given ID not updated.',
     });
   }
 });
 
 // delete user
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const user = await User.findOneAndDelete({ _id: req.params.id });
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({
       err: error.message,
-      msg: "Users with given ID not deleted."
+      msg: 'Users with given ID not deleted.',
     });
   }
 });
