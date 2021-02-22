@@ -1,7 +1,7 @@
-import bcryptjs from 'bcryptjs';
 import express from "express";
 
 import { generateToken } from '../utils/generateToken.js';
+import { authorize } from '../middleware/authorization.js';
 import User from "../models/User.js";
 
 const router = express.Router();
@@ -22,6 +22,26 @@ router.post('/login', async (req, res) => {
     });
   } else {
     res.status(401).send('Invalid email or password!');
+  }
+});
+
+// user profile
+router.get('/profile', authorize, async (req, res) => {
+  try {
+    // const user = req.user;
+    const user = await User.findById(req.user._id);
+
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } catch (error) {
+    res.status(401).json({
+      err: error.message,
+      msg: "Couldn\'t login to profile!"
+    });
   }
 });
 
